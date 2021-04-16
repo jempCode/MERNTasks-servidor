@@ -26,7 +26,7 @@ exports.autenticarUsuario = async (req, res) => {
         const passCorrecto = await bcrypt.compare(password, usuario.password);
 
         if(!passCorrecto) {
-            return res.status(200).send({msg: 'Password incorrecto'})
+            return res.status(401).send({msg: 'Password incorrecto'})
         }
 
         // si todo es correcto se crea el JWT
@@ -47,5 +47,15 @@ exports.autenticarUsuario = async (req, res) => {
 
     } catch (error) {
         console.log(error);
+    }
+}
+
+exports.usuarioAutenticado = async (req, res) => {
+    try {
+        const usuario = await Usuario.findById(req.usuario.id).select('-password');
+        return res.status(200).json({usuario});
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({msg:'Hubo un error'});
     }
 }
