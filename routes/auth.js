@@ -10,7 +10,7 @@ router.post('/',
     autController.autenticarUsuario
 );
     
-    
+// obtiene el usuario autenticado
 router.get('/',
     auth,
     autController.usuarioAutenticado    
